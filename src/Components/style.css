@@ -1,0 +1,13 @@
+.message-list {
+  margin: 10px 0;
+}
+
+.message {
+  padding: 5px 10px;
+  background: #e2e2e2;
+  margin-bottom: 10px;
+}
+
+.author {
+  font-weight: 600;
+}
