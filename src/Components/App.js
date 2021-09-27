@@ -5,6 +5,8 @@ import NotFound from "./NotFound/NotFound";
 import Profile from "./Profile/Profile";
 import { createTheme, Paper} from "@material-ui/core";
 import { styled } from '@material-ui/styles';
+import { Provider } from "react-redux";
+import { store } from "../store";
 
 const theme = createTheme ({
   palette: {
@@ -38,7 +40,9 @@ function App() {
           <ChatComponent chatsList={chatsList} theme={theme} Item={Item} />
         </Route>
         <Route exact path="/profile">
-          <Profile />
+          <Provider store={store}>
+            <Profile />
+          </Provider>
         </Route>
         <Route component={NotFound} />
       </Switch>
