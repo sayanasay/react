@@ -1,50 +1,66 @@
 import { useParams } from "react-router";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import FormComponent from "../FormComponent/FormComponent";
 import MessageList from "../MessageList/MessageList";
 import CheckChat from "../HOC/checkChat";
-import { Grid, ThemeProvider } from '@material-ui/core';
+import { Grid, ThemeProvider } from "@material-ui/core";
 import ChatsList from "../ChatsList/ChatsList";
+import { useSelector, useDispatch } from "react-redux";
+import { addMessage } from "../../actions/messagesAction";
 
-const ChatComponent = ({ chatsList, theme, Item }) => {
-  const [messageList, setMessageList] = useState([]);
+const ChatComponent = ({ theme, Item }) => {
   const ref = useRef(null);
+  const dispatch = useDispatch();
+  const { chatId } = useParams();
+  const messageLists = useSelector(state => state.messages);
+  const messages = messageLists.find((el) => el.chatIndex === +chatId)?.messages;
 
   useEffect(() => {
     ref.current?.focus();
-  }, [messageList]);
+  }, [messages]);
 
   useEffect(() => {
-    if ((messageList[messageList.length - 1]?.author) === 'user') {
-      setTimeout(() =>
-        setMessageList(prev => [...prev, { id: prev.length, text: 'This is automatic answer', author: 'robot' }])
-        , 1500)
+    let interval;
+    if (messages && messages[messages?.length - 1]?.author === "user") {
+      interval = setTimeout(
+        () =>
+          dispatch(addMessage({
+            chatIndex: chatId,
+            text: "This is automatic answer",
+            author: "robot",
+          })
+          ),
+        1500
+      );
     }
-  }, [messageList]);
-
-  const { chatId } = useParams();
+    return () => {
+      clearTimeout(interval);
+    };
+  }, [messages]);
 
   return (
     <ThemeProvider theme={theme}>
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <Item>
-            <ChatsList chatsList={chatsList} />
+            <ChatsList />
           </Item>
         </Grid>
         <Grid item xs={8}>
           <Item>
-            <CheckChat chatId={chatId} chatsList={chatsList}>
+            <CheckChat chatId={chatId}>
               <p>Chat {chatId}</p>
-              <FormComponent setFunc={setMessageList} refVal={ref} />
-              <MessageList messageList={messageList} />
+              <FormComponent
+              chatId={chatId}
+              refVal={ref}
+              />
+              <MessageList messages={messages}/>
             </CheckChat>
           </Item>
         </Grid>
       </Grid>
     </ThemeProvider>
-
   );
-}
+};
 
 export default ChatComponent;
