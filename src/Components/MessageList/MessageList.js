@@ -1,9 +1,10 @@
 import { List, ListItem, ListItemText } from '@material-ui/core';
 
-const MessageList = ({messageList}) => {
+const MessageList = ({ messages }) => {
+
   return (
     <List>
-      {messageList.map((obj) => (
+      {messages.map((obj) => (
         <ListItem key={obj.id}>
           <ListItemText
             primary={obj.text}

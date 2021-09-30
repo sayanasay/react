@@ -1,23 +1,25 @@
 import { useState } from "react";
 import { TextField, Button } from '@material-ui/core';
 import { styled } from '@material-ui/styles';
+import { useDispatch } from "react-redux";
+import { addMessage } from "../../actions/messagesAction";
 
 const MyTextField = styled(TextField)({
   margin: '0 10px 0 0',
 });
 
-
-const FormComponent = ({setFunc, refVal}) => {
+const FormComponent = ({ refVal, chatId }) => {
   const [value, setValue] = useState('');
-
+  const dispatch = useDispatch();
+  
   const handleChange = (event) => {
     setValue(event.target.value);
   }
 
   const handleSubmit = (event) => {
-    setFunc(prev => [...prev, { id: prev.length, text: value, author: 'user' }]);
-    setValue('');
     event.preventDefault();
+    dispatch(addMessage({text: value, chatIndex: chatId, author: "user"}));
+    setValue('');
   }
 
   return (
