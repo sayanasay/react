@@ -6,7 +6,7 @@ import CheckChat from "../HOC/checkChat";
 import { Grid, ThemeProvider } from "@material-ui/core";
 import ChatsList from "../ChatsList/ChatsList";
 import { useSelector, useDispatch } from "react-redux";
-import { addMessage } from "../../actions/messagesAction";
+import { robotMessage } from "../../actions/messagesAction";
 
 const ChatComponent = ({ theme, Item }) => {
   const ref = useRef(null);
@@ -20,22 +20,7 @@ const ChatComponent = ({ theme, Item }) => {
   }, [messages]);
 
   useEffect(() => {
-    let interval;
-    if (messages && messages[messages?.length - 1]?.author === "user") {
-      interval = setTimeout(
-        () =>
-          dispatch(addMessage({
-            chatIndex: chatId,
-            text: "This is automatic answer",
-            author: "robot",
-          })
-          ),
-        1500
-      );
-    }
-    return () => {
-      clearTimeout(interval);
-    };
+    dispatch(robotMessage(messages, chatId))
   }, [messages]);
 
   return (
