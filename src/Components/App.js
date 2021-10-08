@@ -5,6 +5,8 @@ import NotFound from "./NotFound/NotFound";
 import Profile from "./Profile/Profile";
 import { createTheme, Paper } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
+import GiphyComponent from "./GiphyComponent/GiphyComponent";
+import GifsList from "./GifsList/GifsList";
 
 const theme = createTheme({
   palette: {
@@ -30,14 +32,14 @@ function App() {
         <Route exact path="/">
           <Main theme={theme} Item={Item} />
         </Route>
-        <Route exact path="/chats/">
-          <ChatComponent theme={theme} Item={Item} />
-        </Route>
-        <Route exact path="/chats/:chatId">
+        <Route path="/chats/:chatId?">
           <ChatComponent theme={theme} Item={Item} />
         </Route>
         <Route exact path="/profile">
           <Profile />
+        </Route>
+        <Route exact path="/gifs">
+          <GiphyComponent />
         </Route>
         <Route component={NotFound} />
       </Switch>
