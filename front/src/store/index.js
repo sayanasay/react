@@ -5,6 +5,7 @@ import messages from "./messages";
 import profileReducer from "./profile";
 import gifs from "./gifs";
 import gifsCategories from "./gifsCategories";
+import user from "./user";
 import thunk from 'redux-thunk';
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   chats,
   messages,
   gifs,
-  gifsCategories
+  gifsCategories,
+  user
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -6,7 +6,7 @@ import CheckChat from "../HOC/checkChat";
 import { Grid, ThemeProvider } from "@material-ui/core";
 import ChatsList from "../ChatsList/ChatsList";
 import { useSelector, useDispatch } from "react-redux";
-import { robotMessage } from "../../actions/messagesAction";
+import { fetchMessages, robotMessage } from "../../actions/messagesAction";
 
 const ChatComponent = ({ theme, Item }) => {
   const ref = useRef(null);
@@ -20,8 +20,17 @@ const ChatComponent = ({ theme, Item }) => {
   }, [messages]);
 
   useEffect(() => {
-    dispatch(robotMessage(messages, chatId))
+    if (messageLists.length === 0) {
+      dispatch(fetchMessages());
+    }
+  }, []);
+
+  const messageId = messages?.length ? messages.length+1 : 1;
+
+  useEffect(() => {
+    dispatch(robotMessage(messages, chatId, messageId))
   }, [messages]);
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -38,6 +47,7 @@ const ChatComponent = ({ theme, Item }) => {
               <FormComponent
               chatId={chatId}
               refVal={ref}
+              messageId={messageId}
               />
               <MessageList messages={messages}/>
             </CheckChat>
