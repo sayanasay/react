@@ -6,7 +6,8 @@ import Profile from "./Profile/Profile";
 import { createTheme, Paper } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
 import GiphyComponent from "./GiphyComponent/GiphyComponent";
-import GifsList from "./GifsList/GifsList";
+import AuthPage from "./AuthPage/AuthPage";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 
 const theme = createTheme({
   palette: {
@@ -29,18 +30,19 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
+        <Route exact path="/" component={AuthPage} />
+        <PrivateRoute path="/main" >
           <Main theme={theme} Item={Item} />
-        </Route>
-        <Route path="/chats/:chatId?">
+        </PrivateRoute>
+        <PrivateRoute path="/chats/:chatId?">
           <ChatComponent theme={theme} Item={Item} />
-        </Route>
-        <Route exact path="/profile">
+        </PrivateRoute>
+        <PrivateRoute exact path="/profile">
           <Profile />
-        </Route>
-        <Route exact path="/gifs">
+        </PrivateRoute>
+        <PrivateRoute exact path="/gifs">
           <GiphyComponent />
-        </Route>
+        </PrivateRoute>
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>

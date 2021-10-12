@@ -8,7 +8,7 @@ const MyTextField = styled(TextField)({
   margin: '0 10px 0 0',
 });
 
-const FormComponent = ({ refVal, chatId }) => {
+const FormComponent = ({ refVal, chatId, messageId }) => {
   const [value, setValue] = useState('');
   const dispatch = useDispatch();
   
@@ -18,7 +18,7 @@ const FormComponent = ({ refVal, chatId }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(addMessage({text: value, chatIndex: chatId, author: "user"}));
+    dispatch(addMessage(chatId, {id: messageId, text: value, author: "user"}));
     setValue('');
   }
 
