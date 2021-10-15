@@ -18,10 +18,10 @@ export const getGifFailure = (err) => ({
   type: GET_GIFS_FAILURE,
   payload: err,
 });
-
+export const API = 'https://api.giphy.com/v1/gifs/search?api_key=VbSCLQ89n4HxFUky6Za4wLOtdwj5JYtI';
 export const getGifs = (value, limit) => (dispatch) => {
   dispatch(getGifsRequest());
-  const url = `https://api.giphy.com/v1/gifs/search?api_key=VbSCLQ89n4HxFUky6Za4wLOtdwj5JYtI&limit=${limit}&q=${value}`;
+  const url = `${API}&limit=${limit}&q=${value}`;
   fetch(url)
     .then((response) => {
       if (!response.ok) {

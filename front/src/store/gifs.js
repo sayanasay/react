@@ -12,7 +12,7 @@ export const STATUSES = {
   FAILURE: 3,
 };
 
-const initialState = {
+export const initialState = {
   gifsList: [],
   searchText: "",
   request: STATUSES.IDLE,

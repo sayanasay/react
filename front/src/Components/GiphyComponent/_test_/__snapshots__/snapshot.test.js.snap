@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot test returns correct state after GET_CATEGORIES_SUCCESS action 1`] = `
+Object {
+  "categories": Array [
+    1,
+    2,
+    3,
+  ],
+  "error": null,
+  "gifsList": Array [],
+  "request": 2,
+  "searchText": "",
+}
+`;
